@@ -36,8 +36,6 @@ services:
       restart: always
       volumes:
         - ./node/config.yml:/etc/ssmgr/node.yml
-      ports:
-        - "${NODE_MANAGER_PORT}:6002"
       network_mode: "host"
       restart: always
 

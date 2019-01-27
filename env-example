@@ -19,11 +19,6 @@ NETWORKS_DRIVER=bridge
 
 WEBGUI_HOST_HTTP_PORT=80
 
-### NODE #################################################
-
-NODE_SHADOWSOCKS_PORT=6001
-NODE_MANAGER_PORT=6002
-
 ### MYSQL #################################################
 
 MYSQL_VERSION=5.7
