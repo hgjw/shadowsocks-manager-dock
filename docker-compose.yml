@@ -5,8 +5,6 @@ networks:
     driver: ${NETWORKS_DRIVER}
   backend:
     driver: ${NETWORKS_DRIVER}
-  node:
-    driver: ${NODE_NETWORKS_DRIVER}
 
 volumes:
   mysql:
@@ -43,7 +41,7 @@ services:
       networks:
         - frontend
         - backend
-        - node
+        - host
       restart: always
 
 ### MySQL ################################################
