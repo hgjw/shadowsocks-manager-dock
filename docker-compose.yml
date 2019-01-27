@@ -38,10 +38,7 @@ services:
         - ./node/config.yml:/etc/ssmgr/node.yml
       ports:
         - "${NODE_MANAGER_PORT}:6002"
-      networks:
-        - frontend
-        - backend
-        - host
+      network_mode: "host"
       restart: always
 
 ### MySQL ################################################
