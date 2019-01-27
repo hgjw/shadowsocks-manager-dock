@@ -1,0 +1,40 @@
+###########################################################
+###################### General Setup ######################
+###########################################################
+
+### Paths #################################################
+
+# Choose storage path on your machine. For all storage systems
+DATA_PATH_HOST=~/shadowsocks-manager-data
+
+### Drivers ################################################
+
+# All volumes driver
+VOLUMES_DRIVER=local
+
+# All Networks driver
+NETWORKS_DRIVER=bridge
+NODE_NETWORKS_DRIVER=bridge
+
+### WEBGUI #################################################
+
+WEBGUI_HOST_HTTP_PORT=80
+
+### NODE #################################################
+
+NODE_SHADOWSOCKS_PORT=6001
+NODE_MANAGER_PORT=6002
+
+### MYSQL #################################################
+
+MYSQL_VERSION=5.7
+MYSQL_DATABASE=default
+MYSQL_USER=default
+MYSQL_PASSWORD=secret
+MYSQL_PORT=3306
+MYSQL_ROOT_PASSWORD=root
+MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
+
+### REDIS #################################################
+
+REDIS_PORT=6379

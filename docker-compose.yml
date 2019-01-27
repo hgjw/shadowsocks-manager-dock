@@ -1,0 +1,79 @@
+version: '3'
+
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+  node-s:
+    driver: ${NODE_NETWORKS_DRIVER}
+
+volumes:
+  mysql:
+    driver: ${VOLUMES_DRIVER}
+  redis:
+    driver: ${VOLUMES_DRIVER}
+
+services:
+
+### webgui #########################################
+    webgui:
+      build:
+        context: ./webgui
+      restart: always
+      volumes:
+        - ./webgui/config.yml:/etc/ssmgr/webgui.yml
+        - ${DATA_PATH_HOST}/ssmgr:/root/.ssmgr
+      ports:
+        - "${WEBGUI_HOST_HTTP_PORT}:80"
+      networks:
+        - frontend
+        - backend
+      restart: always
+
+### node #########################################
+    node:
+      build:
+        context: ./node
+      restart: always
+      volumes:
+        - ./node/config.yml:/etc/ssmgr/node.yml
+      ports:
+        - "${NODE_MANAGER_PORT}:6002"
+      networks:
+        - frontend
+        - backend
+      restart: always
+
+### MySQL ################################################
+    mysql:
+      build:
+        context: ./mysql
+        args:
+          - MYSQL_VERSION=${MYSQL_VERSION}
+      restart: always
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - TZ=Asia/Shanghai
+      volumes:
+        - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+        - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+      ports:
+        - "${MYSQL_PORT}:3306"
+      networks:
+        - backend
+
+### Redis ################################################
+    redis:
+      build: ./redis
+      volumes:
+        - ${DATA_PATH_HOST}/redis:/data
+      ports:
+        - "${REDIS_PORT}:6379"
+      networks:
+        - backend
+      restart: always
+
